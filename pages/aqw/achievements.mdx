@@ -1,0 +1,123 @@
+import { Tab, Tabs } from "nextra-theme-docs";
+
+# Achievements / Badges
+
+## Base URL
+```python copy
+https://multus-aqw-api.vercel.app/api/aqw/items?name=Alina
+```
+
+## Query Parameters
+| Parameter |  Type  | Description                | Required? | Default |
+| :-------: | :----: | -------------------------- | :-------: | :-----: |
+|   name    | string | The name/ign of a Character|    Yes    |  `""`   |
+
+## Request Samples
+
+<Tabs items={["JavaScript", "Python"]}>
+  <Tab>
+    <>
+        ```js
+        import axios from "axios";
+
+        // Using "Alina" as name query
+        const name = "Alina"
+        const url = `https://multus-aqw-api.vercel.app/api/aqw/achievements?name=${name}`;
+        const data = async () => {
+            try {
+                const { data } = await axios.get(url);
+                return data;
+            } catch (err) {
+                throw new Error(err.message);
+            }
+        };
+
+        console.log(data);
+        ```
+    </>
+
+  </Tab>
+  <Tab>
+    <>
+        ```python
+        import requests
+
+        # Using "Alina" as name query
+        name = Alina
+        url = f"https://multus-aqw-api.vercel.app/api/aqw/achievements?name={name}"
+        response = requests.get(url)
+        data = response.json()
+
+        print(data['data'])
+        ```
+    </>
+
+  </Tab>
+</Tabs>
+
+## Response Schema
+
+<Tabs items={["200 OK", "200 OK (Unidentified)", "400 Bad Request"]}>
+  <Tab>
+  **MIME Type:** `application/json`
+  ```json copy=false
+  {
+    "total": 524,
+    "badges": [
+        {
+            "id": 299,
+            "category": "Artix Entertainment",
+            "title": "Beserker Backer",
+            "description": "You've unlocked the Kickstarter Backer Blade and cape for supporting the development of AdventureQuest 3D! ALL the heroes of Lore salute you! /bows",
+            "imageURL": "https://www.aq.com/images/icons/badges/berserker-backer.jpg",
+            "subCategory": ""
+        },
+        {
+            "id": 300,
+            "category": "Artix Entertainment",
+            "title": "AQ3D Tester",
+            "description": "You unlocked this badge for helping test the AQ3D tech demo!",
+            "imageURL": "https://www.aq.com/images/icons/badges/techdemo.jpg",
+            "subCategory": ""
+        },
+        {
+            "id": 301,
+            "category": "Artix Entertainment",
+            "title": "Battle Gems Founder",
+            "description": "You unlocked this badge when you became a founder in AE's first mobile game, Battle Gems!",
+            "imageURL": "https://www.aq.com/images/icons/badges/battlegems.jpg",
+            "subCategory": ""
+        },
+        ...
+        // Other achievements
+    ]
+  }
+  ```
+  </Tab>
+  <Tab>
+  **MIME Type:** `application/json`
+  ```json copy=false
+  {
+    "total": 1,
+    "badges": [
+        {
+            "id": 0,
+            "category": "Hidden",
+            "title": "Achivements Hidden",
+            "description": "No Peeking!",
+            "imageURL": "https://www.aq.com/images/icons/badges/char-badgehideall.jpg",
+            "subCategory": "z"
+        }
+    ]
+  }
+  ```
+  </Tab>
+  <Tab>
+  **MIME Type:** `application/json`
+  ```json copy=false
+  {
+    "error": "No name provided"
+  }
+  ```
+  </Tab>
+</Tabs>

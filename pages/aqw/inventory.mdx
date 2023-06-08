@@ -1,0 +1,109 @@
+import { Tab, Tabs } from "nextra-theme-docs";
+
+# Inventory
+
+## Base URL
+```python copy
+https://multus-aqw-api.vercel.app/api/aqw/items?name=Alina
+```
+
+## Query Parameters
+| Parameter |  Type  | Description                | Required? | Default |
+| :-------: | :----: | -------------------------- | :-------: | :-----: |
+|   name    | string | The name/ign of a Character|    Yes    |  `""`   |
+
+## Request Samples
+
+<Tabs items={["JavaScript", "Python"]}>
+  <Tab>
+    <>
+        ```js
+        import axios from "axios";
+
+        // Using "Alina" as name query
+        const name = "Alina"
+        const url = `https://multus-aqw-api.vercel.app/api/aqw/items?name=${name}`;
+        const data = async () => {
+            try {
+                const { data } = await axios.get(url);
+                return data;
+            } catch (err) {
+                throw new Error(err.message);
+            }
+        };
+
+        console.log(data);
+        ```
+    </>
+
+  </Tab>
+  <Tab>
+    <>
+        ```python
+        import requests
+
+        # Using "Alina" as name query
+        name = Alina
+        url = f"https://multus-aqw-api.vercel.app/api/aqw/items?name={name}"
+        response = requests.get(url)
+        data = response.json()
+
+        print(data['data'])
+        ```
+    </>
+
+  </Tab>
+</Tabs>
+
+## Response Schema
+
+<Tabs items={["200 OK", "200 OK (Unidentified)", "400 Bad Request"]}>
+  <Tab>
+  **MIME Type:** `application/json`
+  ```json copy=false
+  [
+    {
+        "acTagged": false,
+        "quantity": 1,
+        "name": "Mage",
+        "type": "Class"
+    },
+    {
+        "acTagged": false,
+        "quantity": 1,
+        "name": "No Class",
+        "type": "Class"
+    },
+    {
+        "acTagged": true,
+        "quantity": 1,
+        "name": "AFKnator",
+        "type": "Armor"
+    },
+    ...
+    // Other Items
+  ]
+  ```
+  </Tab>
+  <Tab>
+  **MIME Type:** `application/json`
+  ```json copy=false
+  [
+    {
+        "acTagged": false,
+        "quantity": 0,
+        "name": "Inventory Hidden",
+        "type": "Item"
+    }
+  ]
+  ```
+  </Tab>
+  <Tab>
+  **MIME Type:** `application/json`
+  ```json copy=false
+  {
+    "error": "No name provided"
+  }
+  ```
+  </Tab>
+</Tabs>
